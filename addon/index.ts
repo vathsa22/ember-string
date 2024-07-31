@@ -4,6 +4,9 @@
  */
 import Cache from './cache';
 import { deprecate } from '@ember/debug';
+import {
+  htmlSafe as internalHtmlSafe,
+} from '@ember/-internals/glimmer';
 
 // STATE within a module is frowned upon, this exists
 // to support Ember.STRINGS but shield ember internals from this legacy global
@@ -259,10 +262,15 @@ export function capitalize(str: string): string {
   the import path is not triggered. This error message is intended to help
   users discover what they need to change.
 */
-export function htmlSafe(str: string): void {
-  throw new Error(
-    'htmlSafe is not implemented in the `@ember/string` package. Please import from `@ember/template` instead.'
-  );
+// export function htmlSafe(str: string): void {
+//   throw new Error(
+//     'htmlSafe is not implemented in the `@ember/string` package. Please import from `@ember/template` instead.'
+//   );
+// }
+
+export function htmlSafe(str: string): SafeString {
+
+  return internalHtmlSafe(str);
 }
 
 export function isHTMLSafe(str: any | null | undefined): void {
