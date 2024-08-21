@@ -229,6 +229,7 @@ export function htmlSafe(str)  {
 
   return internalHtmlSafe(str);
 }
- export function isHTMLSafe(str) {
-	 throw new Error('isHTMLSafe is not implemented in the `@ember/string` package. Please import from `@ember/template` instead.');
- }
+export function isHTMLSafe(str) {
+
+  return internalIsHtmlSafe(str);
+}

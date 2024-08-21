@@ -6,6 +6,7 @@ import Cache from './cache';
 import { deprecate } from '@ember/debug';
 import {
   htmlSafe as internalHtmlSafe,
+  isHTMLSafe as internalIsHtmlSafe,
 } from '@ember/-internals/glimmer';
 
 // STATE within a module is frowned upon, this exists
@@ -273,8 +274,7 @@ export function htmlSafe(str: string): SafeString {
   return internalHtmlSafe(str);
 }
 
-export function isHTMLSafe(str: any | null | undefined): void {
-  throw new Error(
-    'isHTMLSafe is not implemented in the `@ember/string` package. Please import from `@ember/template` instead.'
-  );
+export function isHTMLSafe(str: any | null | undefined): str is SafeString {
+
+  return internalIsHtmlSafe(str);
 }
