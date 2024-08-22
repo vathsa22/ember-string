@@ -4,9 +4,6 @@
  @module @ember/string
  */
  import Cache from './cache';
- import {
-  htmlSafe as internalHtmlSafe,
-} from '@ember/-internals/glimmer';
  // STATE within a module is frowned upon, this exists
  // to support Ember.STRINGS but shield ember internals from this legacy global
  // API.
@@ -225,11 +222,30 @@
 // 	 throw new Error('htmlSafe is not implemented in the `@ember/string` package. Please import from `@ember/template` instead.');
 //  }
 
-export function htmlSafe(str)  {
+export class SafeString {
 
-  return internalHtmlSafe(str);
+  constructor(string) {
+    this.string = string;
+  }
+
+  toString() {
+    return `${this.string}`;
+  }
+
+  toHTML() {
+    return this.toString();
+  }
 }
-export function isHTMLSafe(str) {
 
-  return internalIsHtmlSafe(str);
+export function htmlSafe(str) {
+  if (str === null || str === undefined) {
+    str = '';
+  } else if (typeof str !== 'string') {
+    str = String(str);
+  }
+  return new SafeString(str);
+}
+
+export function isHTMLSafe(str) {
+  return str !== null && typeof str === 'object' && typeof str.toHTML === 'function';
 }
