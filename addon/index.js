@@ -249,3 +249,14 @@ export function htmlSafe(str) {
 export function isHTMLSafe(str) {
   return str !== null && typeof str === 'object' && typeof str.toHTML === 'function';
 }
+
+export function loc(formatString, values) {
+  let result = formatString;
+
+  // Replace each placeholder %@ with the corresponding value from the values array
+  values.forEach((value, index) => {
+      result = result.replace('%@', value);
+  });
+
+  return result;
+}
